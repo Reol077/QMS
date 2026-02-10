@@ -1,3 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  /* 定义 QMS 三端适配断点 */
+  --breakpoint-mobile: 320px;
+  --breakpoint-pad: 768px;
+  --breakpoint-pc: 1280px;
+  
+  /* 你也可以定义一些质量管理系统常用的颜色，比如：合格绿、警告橙 */
+  --color-qms-success: #10b981;
+  --color-qms-danger: #ef4444;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

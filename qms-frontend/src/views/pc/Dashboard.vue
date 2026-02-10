@@ -1,74 +1,43 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
-
-// 模拟数据
-const stats = [
-  { title: '今日产出', value: '1,280', unit: 'pcs', color: 'text-blue-600' },
-  { title: '合格率', value: '98.5', unit: '%', color: 'text-green-600' },
-  { title: '待处理异常', value: '3', unit: '单', color: 'text-red-600' },
-  { title: '本月结案率', value: '92', unit: '%', color: 'text-purple-600' }
-]
-
-const chartRef = ref<HTMLElement | null>(null)
-
-onMounted(() => {
-  if (chartRef.value) {
-    const myChart = echarts.init(chartRef.value)
-    myChart.setOption({
-      title: { text: '周质量波动趋势' },
-      tooltip: { trigger: 'axis' },
-      xAxis: { type: 'category', data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] },
-      yAxis: { type: 'value', min: 90 },
-      series: [{
-        data: [98, 97, 99, 98.5, 96, 98, 99.2],
-        type: 'line',
-        smooth: true,
-        areaStyle: { opacity: 0.2 },
-        itemStyle: { color: '#2563eb' }
-      }]
-    })
-    
-    // 适配窗口大小
-    window.addEventListener('resize', () => myChart.resize())
-  }
-})
-</script>
-
 <template>
-  <div class="p-6 bg-slate-50 min-h-screen">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-      <el-card v-for="item in stats" :key="item.title" shadow="hover" class="!border-none">
-        <div class="text-sm text-slate-500">{{ item.title }}</div>
-        <div class="mt-2 flex items-baseline">
-          <span class="text-2xl font-bold" :class="item.color">{{ item.value }}</span>
-          <span class="ml-1 text-xs text-slate-400">{{ item.unit }}</span>
-        </div>
-      </el-card>
+  <div class="space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+        <div class="text-gray-400 text-xs font-bold uppercase">今日涂布总长度</div>
+        <div class="text-2xl font-black text-slate-700 mt-1">24,532 m</div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+        <div class="text-gray-400 text-xs font-bold uppercase">实时合格率</div>
+        <div class="text-2xl font-black text-slate-700 mt-1">99.8%</div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-500">
+        <div class="text-gray-400 text-xs font-bold uppercase">待检母卷</div>
+        <div class="text-2xl font-black text-slate-700 mt-1">12 卷</div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-purple-500">
+        <div class="text-gray-400 text-xs font-bold uppercase">运行机台</div>
+        <div class="text-2xl font-black text-slate-700 mt-1">6 / 8</div>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <el-card class="lg:col-span-2 !border-none" shadow="never">
-        <div ref="chartRef" class="h-80 w-full"></div>
-      </el-card>
-
-      <el-card class="!border-none" shadow="never">
-        <template #header>
-          <div class="font-bold flex justify-between items-center">
-            <span>实时异常监控</span>
-            <el-tag type="danger" effect="dark" round>紧急</el-tag>
-          </div>
-        </template>
-        <div class="space-y-4">
-          <div v-for="i in 3" :key="i" class="flex items-start space-x-3 pb-3 border-b border-slate-100 last:border-0">
-            <div class="w-2 h-2 mt-2 rounded-full bg-red-500"></div>
-            <div>
-              <div class="text-sm font-medium">#{{ 1024 + i }} 线体外观缺陷</div>
-              <div class="text-xs text-slate-400 mt-1">发现人：张工 | 10分钟前</div>
-            </div>
-          </div>
-        </div>
-      </el-card>
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="text-lg font-bold mb-4 text-slate-800">实时生产动态</h3>
+      <el-table :data="recentData" style="width: 100%">
+        <el-table-column prop="time" label="时间" width="100" />
+        <el-table-column prop="event" label="事件" />
+        <el-table-column prop="status" label="状态">
+          <template #default="scope">
+            <el-tag :type="scope.row.type">{{ scope.row.status }}</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const recentData = [
+  { time: '10:25', event: 'L-01 线母卷 #A20240210 入库', status: '完成', type: 'success' },
+  { time: '10:10', event: 'L-03 线烘箱温度偏高告警', status: '已处理', type: 'warning' },
+  { time: '09:45', event: '质检员 [王工] 开启首检', status: '进行中', type: '' },
+]
+</script>

@@ -1,25 +1,36 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
+import tailwindcss from '@tailwindcss/vite' 
+
+// 导入插件
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { VantResolver } from 'unplugin-vue-components/resolvers'
+// 导入对应的解析器
+import { ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   plugins: [
     vue(),
     tailwindcss(),
-    // 自动导入 API (如 ref, reactive 等)
+    // 1. 自动导入 Vue/Vue-Router 等 API (如 ref, reactive, useRouter)
     AutoImport({
+      imports: ['vue', 'vue-router', 'pinia'],
       resolvers: [ElementPlusResolver()],
+      dts: 'src/auto-import.d.ts', // 生成类型声明文件，让 TS 不报错
     }),
-    // 自动按需导入组件
+    // 2. 自动导入组件 (如 <el-button>, <van-button>)
     Components({
       resolvers: [
-        ElementPlusResolver(), // 自动识别 el- 开头的组件
-        VantResolver()        // 自动识别 van- 开头的组件
+        ElementPlusResolver(), 
+        VantResolver()
       ],
+      dts: 'src/components.d.ts', // 生成类型声明文件
     }),
   ],
 })

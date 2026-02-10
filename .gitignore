@@ -1,17 +1,31 @@
-# IDE
-.idea/
-.vscode/
-
-# Frontend
-qms-frontend/node_modules/
-qms-frontend/dist/
-qms-frontend/bun.lockb
-
-# Backend
-qms-backend/target/
-qms-backend/*.iml
-qms-backend/.mvn/
-
-# System
+# --- 系统文件 ---
 .DS_Store
 Thumbs.db
+*.log
+
+# --- Python (qms-backend) ---
+qms-backend/venv/
+qms-backend/__pycache__/
+qms-backend/*.pyc
+qms-backend/.env
+qms-backend/.pytest_cache/
+qms-backend/dist/
+
+# --- Node/Vue (qms-frontend) ---
+qms-frontend/node_modules/
+qms-frontend/dist/
+qms-frontend/dist-ssr/
+qms-frontend/*.local
+qms-frontend/.vscode/*
+!qms-frontend/.vscode/extensions.json
+
+# --- 数据库与本地配置 ---
+*.db
+*.sqlite3
+.idea/
+.vscode/
+*.local.env
+
+# --- 编译/打包产物 ---
+bin/
+obj/

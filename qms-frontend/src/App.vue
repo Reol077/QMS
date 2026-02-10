@@ -1,26 +1,25 @@
 <template>
-  <el-config-provider :locale="zhCn">
-    <router-view />
-  </el-config-provider>
+  <router-view />
 </template>
 
 <script setup lang="ts">
-import { ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+/**
+ * 这里不需要写复杂的逻辑
+ * 所有的分流跳转逻辑已经由 router/index.ts 处理完毕
+ */
 </script>
 
 <style>
-/* 全局样式重置 */
+/* 基础重置样式，确保三端铺满全屏 */
 html, body, #app {
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* 消除 Element Plus 的一些默认边距影响 */
-.el-container {
-  height: 100% !important;
+/* 隐藏横向滚动条 */
+body {
+  overflow-x: hidden;
 }
 </style>

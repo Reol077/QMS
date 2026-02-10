@@ -1,0 +1,8 @@
+E:\Project\QMS\qms-frontend node_modules (97)
+[2m├──[0m @types/node[0m[2m@24.10.12[0m
+[2m├──[0m @vitejs/plugin-vue[0m[2m@6.0.4[0m
+[2m├──[0m @vue/tsconfig[0m[2m@0.8.1[0m
+[2m├──[0m typescript[0m[2m@5.9.3[0m
+[2m├──[0m vite[0m[2m@7.3.1[0m
+[2m├──[0m vue[0m[2m@3.5.28[0m
+[2m└──[0m vue-tsc[0m[2m@3.2.4[0m

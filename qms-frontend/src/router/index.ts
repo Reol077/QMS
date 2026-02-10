@@ -2,11 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 
 // 1. 设备检测函数（针对 PC, Pad, Mobile）
-const getDeviceType = (): 'pc' | 'pad' | 'mobile' => {
-  const ua = navigator.userAgent;
-  const isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(ua);
-  // 识别 Pad：排除手机特征的大屏安卓或 iPad
-  const isPad = /iPad|PlayBook/i.test(ua) || (/Android/i.test(ua) && !isMobile);
+const getDeviceType = (): string => {
+  const ua = navigator.userAgent.toLocaleLowerCase(); // 转小写更稳妥
+  const isMobile = /android|webos|iphone|ipod|blackberry/i.test(ua);
+  const isPad = /ipad|playbook/i.test(ua) || (ua.includes('android') && !isMobile);
 
   if (isMobile) return 'mobile';
   if (isPad) return 'pad';
@@ -24,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/pc/PCLayout.vue'),
     children: [
       // 当访问 /pc 时，自动重定向到 /pc/dashboard
-      { path: '', redirect: 'dashboard' }, 
+      { path: '/pc', redirect: '/pc/dashboard' }, 
       {
         path: 'dashboard',
         component: () => import('@/views/pc/Dashboard.vue')

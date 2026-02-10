@@ -1,0 +1,23 @@
+# 依赖包
+node_modules/
+.pnpm-store/
+bun.lockb
+
+# 构建产物
+dist/
+*.log
+
+# 环境变量与密钥
+.env
+.env*.local
+
+# IDE 配置
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# 系统文件
+Thumbs.db
+.DS_Store
